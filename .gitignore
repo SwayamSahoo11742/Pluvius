@@ -1,0 +1,5 @@
+__pycache__/
+.pytest_cache/
+Tests/
+testfiles/
+MuseScore 4/
