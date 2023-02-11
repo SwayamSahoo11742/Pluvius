@@ -1,4 +1,4 @@
-from music21 import meter, stream, converter, environment
+from music21 import meter, converter
 
 
 class TimeSignature:
@@ -25,8 +25,16 @@ class TimeSignature:
 
     # Time Signature appearance count (count)
     @property
-    def count(self):
-        """Get the count of the number of time signatures"""
+    def count(self) -> int:
+        """Get the count of the number of time signatures.
+
+        Returns:
+            An Integer representing the count of time signature appearances
+            Example:
+
+            test_midi.count = 2
+        
+        """
         # initiate counter
         count = 0
 
@@ -39,7 +47,19 @@ class TimeSignature:
 
     # Time Signature appearances list (list)
     @property
-    def list(self):
+    def list(self, unique : bool = False) -> list | set:
+        """Fetches every occurance of a time signature.
+                   
+            Retrieves all the occurances of time signatures, with an optional ability to get unique signatures only.
+
+            Args:
+                unique: Optional boolean value to indicate whether to return unique time changes or to repeat
+            
+            Returns:
+                A list or set object with time signatures in it.
+            
+                
+        """
         # List of signatures
         sig_list = []
 
@@ -49,7 +69,10 @@ class TimeSignature:
                 # Appending to list
                 sig_list.append(i.ratioString)
 
-        return sig_list
+        if unique:
+            return set(sig_list)
+        else:
+            return sig_list
 
     # Str method
     def __str__(self):

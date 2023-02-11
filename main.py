@@ -5,10 +5,8 @@ import os
 
 
 def main():
-    scop = Scopul("testfiles/test1.mid")
-    print(scop.time_sig.list)
-    scop.midi = "testfiles/test2.mid"
-    print(scop.time_sig.list)
+    scop = Scopul("testfiles/test3.mid")
+    save_pdf("testfiles/test3.mid")
 
 
 def get_tempo(midi):
@@ -48,7 +46,8 @@ def get_note_sequence(midi):
 
 def save_pdf(midi):
     score = converter.parse(midi)
-    score.write("musicxml.pdf", fp="", filename="hello.pdf")
+    # score.write("musicxml.pdf", fp="", filename="hello.pdf")
+    score.show()
 
 
 if __name__ == "__main__":
