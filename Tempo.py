@@ -1,21 +1,56 @@
 from music21 import converter, meter, tempo
-from mido import bpm2tempo, tempo2bpm 
+from mido import bpm2tempo, tempo2bpm
+
+
 class Tempo:
-    def __init__(self, midi : str):
+    def __init__(self, midi: str):
         self._midi = converter.parse(midi)
         self._bpm_list = get_tempos(self._midi)
-        self._midi_tempo_list = [bpm2tempo(m) for m in self.bpm_list]
-    
+        self._midi_tempo_list = [
+            {"tempo": bpm2tempo(m["tempo"]), "measure": m["measure"]}
+            for m in self.bpm_list
+        ]
+
     @property
     def bpm_list(self):
+        """Fetches the tempo list in bpm format
+
+        Fetches the time signatures in bpm with both measure numbers and the tempo
+
+        Returns:
+            A list of dict objects with 2 keys: "tempo" and "measure". For example:
+
+            [{"tempo":36, "measure": 1},{"tempo":5, "measure": 56}]
+
+        """
         return self._bpm_list
 
     @property
     def midi_tempo_list(self):
+        """Fetches the tempo list in midi tempo format
+
+        Fetches the time signatures in midi tempo with both measure numbers and the tempo
+
+        Returns:
+            A list of dict objects with 2 keys: "tempo" and "measure". For example:
+
+            [{"tempo":100000, "measure": 1},{"tempo":10000, "measure": 65}]
+
+        """
         return self._midi_tempo_list
-    
+
     @classmethod
     def midi_tempo2bpm(self, tempo: int | list) -> float | list:
+        """Converts a midi tempo value to bpm
+
+        Returns:
+            A list or an int, depending on the input.
+
+            EX (int input):
+                65
+            OR (list input):
+                [125,50,65]
+        """
         try:
             if type(tempo) == int:
                 return tempo2bpm(tempo)
@@ -23,9 +58,19 @@ class Tempo:
                 return [tempo2bpm(m) for m in tempo]
         except TypeError:
             raise TypeError("midi_tempo2bpm only accepts str or list objects")
-    
+
     @classmethod
     def bpm2midi_tempo(self, tempo: int | list) -> float | list:
+        """Converts a bpm value to midi tempo
+
+        Returns:
+            List or Str object, depending on the input
+
+            EX (int input):
+                10000
+            OR (list input):
+                [10000,896534,23334]
+        """
         try:
             if type(tempo) == int:
                 return bpm2tempo(tempo)
@@ -33,14 +78,14 @@ class Tempo:
                 return [bpm2tempo(m) for m in tempo]
         except TypeError:
             raise TypeError("bpm2midi_tempo only accepts str or list objects")
-    
-
 
 
 def get_tempos(midi):
     lst = []
     for i in midi.flat:
         if isinstance(i, tempo.MetronomeMark):
-            lst.append(i.number)
-    
+            lst.append({"tempo": i.number, "measure": i.measureNumber})
+
     return lst
+
+

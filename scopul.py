@@ -16,36 +16,38 @@ class Scopul(Tempo):
     # Tempo (tempo)
     @property
     def tempo(self):
+        """Fetches Tempo object"""
         return self._tempo
 
     # Time Signature (time_sig)
     @property
     def time_sig(self):
+        """Fetches the Time Signature object"""
         return self._time_sig
 
     # Midi File (midi)
     @property
     def midi(self):
+        """Retrieves your midi file."""
         return self._midi
 
     # Midi File setter
     @midi.setter
     def midi(self, audio):
+        """Allows to reconstruct the object to change accordingly to a new midi"""
         self.construct(audio)
 
     # (Re)constructor
     def construct(self, audio):
         """Constructor function to reconstruct the object
 
-           Can also be called with a setter to the midi attribute. For example:
+        Can also be called with a setter to the midi attribute. For example:
 
-           testmidi.midi = "test.mid"
-        
+        testmidi.midi = "test.mid"
+
         """
         self._midi = converter.parse(audio)
         self._time_sig = TimeSignature(audio)
         self._tempo = Tempo(audio)
 
-myscop = Scopul("testfiles/test1.mid")
-print(Scopul.bpm2midi_tempo(69))
-print(Scopul.midi_tempo2bpm(1000000))
+
