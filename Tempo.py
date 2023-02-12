@@ -1,5 +1,5 @@
 from music21 import converter, meter, tempo
-from mido import bpm2tempo, tempo2bpm
+from mido import bpm2tempo
 
 
 class Tempo:
@@ -39,45 +39,7 @@ class Tempo:
         """
         return self._midi_tempo_list
 
-    @classmethod
-    def midi_tempo2bpm(self, tempo: int | list) -> float | list:
-        """Converts a midi tempo value to bpm
 
-        Returns:
-            A list or an int, depending on the input.
-
-            EX (int input):
-                65
-            OR (list input):
-                [125,50,65]
-        """
-        try:
-            if type(tempo) == int:
-                return tempo2bpm(tempo)
-            elif type(tempo) == list:
-                return [tempo2bpm(m) for m in tempo]
-        except TypeError:
-            raise TypeError("midi_tempo2bpm only accepts str or list objects")
-
-    @classmethod
-    def bpm2midi_tempo(self, tempo: int | list) -> float | list:
-        """Converts a bpm value to midi tempo
-
-        Returns:
-            List or Str object, depending on the input
-
-            EX (int input):
-                10000
-            OR (list input):
-                [10000,896534,23334]
-        """
-        try:
-            if type(tempo) == int:
-                return bpm2tempo(tempo)
-            elif type(tempo) == list:
-                return [bpm2tempo(m) for m in tempo]
-        except TypeError:
-            raise TypeError("bpm2midi_tempo only accepts str or list objects")
 
 
 def get_tempos(midi):
