@@ -3,7 +3,7 @@ from mido import bpm2tempo, tempo2bpm
 
 
 class Tempo:
-    def __init__(self, midi: str):
+    def __init__(self, midi: str) -> None:
         self._midi = converter.parse(midi)
         self._bpm_list = get_tempos(self._midi)
         self._midi_tempo_list = [
@@ -26,7 +26,7 @@ class Tempo:
         return self._bpm_list
 
     @property
-    def midi_tempo_list(self):
+    def midi_tempo_list(self) -> list:
         """Fetches the tempo list in midi tempo format
 
         Fetches the time signatures in midi tempo with both measure numbers and the tempo
@@ -87,5 +87,3 @@ def get_tempos(midi):
             lst.append({"tempo": i.number, "measure": i.measureNumber})
 
     return lst
-
-

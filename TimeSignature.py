@@ -10,25 +10,25 @@ class TimeSignature:
 
     # Signature denominator (denominator)
     @property
-    def denominator(self):
+    def denominator(self) -> int:
         """Denominator part of the time signature"""
         return self._denominator
 
     # Signature numerator (numerator)
     @property
-    def numerator(self):
+    def numerator(self) -> int:
         """Numerator part of the fraction time signature"""
         return self._numerator
 
     # Signature Ratio (ratio)
     @property
-    def ratio(self):
+    def ratio(self) -> str:
         """Ratio / fractional representation of the time signature
 
-            Example: 
-                3/4
-                4/4
-                2/2
+        Example:
+            3/4
+            4/4
+            2/2
         """
         return self._ratio
 
@@ -87,10 +87,9 @@ class TimeSignature:
                         sig_list.pop(idx)
                 except:
                     pass
-        
+
         return sig_list
 
     # Str method
     def __str__(self):
         return self.ratio
-
