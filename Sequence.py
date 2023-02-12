@@ -2,6 +2,7 @@ from music21 import note, chord
 from scopul_exception import InvalidMusicElementError
 from conversions import note_to_number
 
+
 class Part:
     """A class representing the a part in a score.
     EX: A flute part
@@ -20,36 +21,40 @@ class Part:
                 self.sequence.append(Chord(element))
             elif isinstance(element, note.Rest):
                 self.sequence.append(Rest(element))
-    
+
     # Note list
     def get_notes(self, seq: list) -> list:
-        """ Retrieves all the notes in a given sequence
+        """Retrieves all the notes in a given sequence
 
-            Args:
-                seq: a list of Scopul musical symbols (Rest, Chord, Note)
-            
-            Returns:
-                a list of note objects extracted from the list
-            
-            Raises:
-                InvalidMusicElementError: if found a type that is not Rest, Note or Chord
+        Args:
+            seq: a list of Scopul musical symbols (Rest, Chord, Note)
+
+        Returns:
+            a list of note objects extracted from the list
+
+        Raises:
+            InvalidMusicElementError: if found a type that is not Rest, Note or Chord
         """
         # Notes list
-        notes = [] 
+        notes = []
 
         # If not a list, raise error
         if type(seq) != list:
-            raise TypeError("Not a list. Include a list of Scopul Rests, Chords or Note")
-        
+            raise TypeError(
+                "Not a list. Include a list of Scopul Rests, Chords or Note"
+            )
+
         # loop through the sequence
         for idx, i in enumerate(seq):
             # If its not a scopul sequence, raise error
             if type(i) not in [Chord, Note, Rest]:
-                raise InvalidMusicElementError(f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}")
+                raise InvalidMusicElementError(
+                    f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}"
+                )
             # Append to list
             if type(i) == Note:
                 notes.append(i)
-        
+
         return notes
 
     # Gets a count of notes
@@ -59,76 +64,84 @@ class Part:
 
     # Note list
     def get_rests(self, seq: list) -> list:
-        """ Retrieves all the notes in a given sequence
+        """Retrieves all the notes in a given sequence
 
-            Args:
-                seq: a list of Scopul musical symbols (Rest, Chord, Note)
-            
-            Returns:
-                a list of rest objects extracted from the list
-            
-            Raises:
-                InvalidMusicElementError: if found a type that is not Rest, Note or Chord
+        Args:
+            seq: a list of Scopul musical symbols (Rest, Chord, Note)
+
+        Returns:
+            a list of rest objects extracted from the list
+
+        Raises:
+            InvalidMusicElementError: if found a type that is not Rest, Note or Chord
         """
         # rests list
-        rests = [] 
+        rests = []
 
         # If not a list, raise error
         if type(seq) != list:
-            raise TypeError("Not a list. Include a list of Scopul Rests, Chords or Note")
-        
+            raise TypeError(
+                "Not a list. Include a list of Scopul Rests, Chords or Note"
+            )
+
         # loop through the sequence
         for idx, i in enumerate(seq):
             # If its not a scopul sequence, raise error
             if type(i) not in [Chord, Note, Rest]:
-                raise InvalidMusicElementError(f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}")
+                raise InvalidMusicElementError(
+                    f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}"
+                )
             # Append to list
             if type(i) == Rest:
                 rests.append(i)
-        
+
         return rests
 
     # Gets a count of rests
     def get_rest_count(self, seq: list) -> int:
         """Retrieves the number of rests"""
         return len(self.get_rests(seq))
-    
-        # Note list
-    def get_chords(self, seq: list) -> list:
-        """ Retrieves all the chords in a given sequence
 
-            Args:
-                seq: a list of Scopul musical symbols (Rest, Chord, Note)
-            
-            Returns:
-                a list of chords objects extracted from the list
-            
-            Raises:
-                InvalidMusicElementError: if found a type that is not Rest, Note or Chord
+        # Note list
+
+    def get_chords(self, seq: list) -> list:
+        """Retrieves all the chords in a given sequence
+
+        Args:
+            seq: a list of Scopul musical symbols (Rest, Chord, Note)
+
+        Returns:
+            a list of chords objects extracted from the list
+
+        Raises:
+            InvalidMusicElementError: if found a type that is not Rest, Note or Chord
         """
         # chords list
-        chords = [] 
+        chords = []
 
         # If not a list, raise error
         if type(seq) != list:
-            raise TypeError("Not a list. Include a list of Scopul Rests, Chords or Note")
-        
+            raise TypeError(
+                "Not a list. Include a list of Scopul Rests, Chords or Note"
+            )
+
         # loop through the sequence
         for idx, i in enumerate(seq):
             # If its not a scopul sequence, raise error
             if type(i) not in [Chord, Note, Rest]:
-                raise InvalidMusicElementError(f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}")
+                raise InvalidMusicElementError(
+                    f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}"
+                )
             # Append to list
             if type(i) == Chord:
                 chords.append(i)
-        
+
         return chords
 
     # Gets a count of notes
     def get_chord_count(self, seq: list) -> int:
         """Retrieves the number of notes"""
         return len(self.get_chords(seq))
-            
 
     def get_measure(self, m: int | list):
         """Fetches the contents of a measure.
@@ -181,40 +194,44 @@ class Part:
             raise TypeError(
                 f"get_measure only accepts int or list, instead got {type(m)}"
             )
-    
-    def get_highest_note(self, seq: list):
-        """ Retrieves all the chords in a given sequence
 
-            Args:
-                seq: a list of Scopul musical symbols (Rest, Chord, Note)
-            
-            Returns:
-                a list of chords objects extracted from the list
-            
-            Raises:
-                InvalidMusicElementError: if found a type that is not Rest, Note or Chord
+    def get_highest_note(self, seq: list):
+        """Retrieves all the chords in a given sequence
+
+        Args:
+            seq: a list of Scopul musical symbols (Rest, Chord, Note)
+
+        Returns:
+            a list of chords objects extracted from the list
+
+        Raises:
+            InvalidMusicElementError: if found a type that is not Rest, Note or Chord
         """
         # highest note
         highest = 0
 
         # If not a list, raise error
         if type(seq) != list:
-            raise TypeError("Not a list. Include a list of Scopul Rests, Chords or Note")
-        
+            raise TypeError(
+                "Not a list. Include a list of Scopul Rests, Chords or Note"
+            )
+
         # loop through the sequence
         for idx, i in enumerate(seq):
             # If its not a scopul sequence, raise error
             if type(i) not in [Chord, Note, Rest]:
-                raise InvalidMusicElementError(f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}")
+                raise InvalidMusicElementError(
+                    f"Please include a valid Scopul Sequence that contains Chord, Rest or Note objects. Invalid type found : {type(i)} at index {idx}"
+                )
             # Append to list
             if type(i) == Note:
                 if highest == None:
                     highest = i
                 else:
-                    note_val = note_to_number(i.name[0],int(i.name[1]))
+                    note_val = note_to_number(i.name[0], int(i.name[1]))
                     if note_val > note_to_number(highest.name[0], int(highest.name[1])):
                         highest = i
-        
+
         return highest
 
 
@@ -314,5 +331,3 @@ class Chord:
             [Note Object, Note Object]
         """
         return self._notes
-
-

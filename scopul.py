@@ -2,6 +2,7 @@ from music21 import converter, environment, instrument
 import os
 from scopul_exception import InvalidFileFormatError
 from mido import bpm2tempo, tempo2bpm, MidiFile
+
 # Setting up music21 with MuseScore
 env = environment.Environment()
 env["musicxmlPath"] = r"MuseScore 4/bin/MuseScore4.exe"
@@ -52,23 +53,23 @@ class Scopul(Tempo):
     def get_audio_lenght(self) -> int:
         """Returns the audio lenght"""
         return MidiFile(self._audio).length
-    
+
     # Generate a pdf
-    def generate_pdf(self, output : str, fp : str ="", overwrite : bool=False) -> None:
+    def generate_pdf(self, output: str, fp: str = "", overwrite: bool = False) -> None:
         """Generates a pdf of the midi
 
-            Creates a pdf by turning it into musicxml then to pdf
+        Creates a pdf by turning it into musicxml then to pdf
 
-            Args:
-                output: a str that represents the name of the file
-                fp: a str that represents the file path as to where to save the pdf. Default is '', which will save to the current working directory
-                overwrite: a boolean, indicates whether to overwrite files or not
-            
-            Returns:
-                None, just generates a pdf in the path specified with the name specified
-            
-            Raises:
-                FileExistsError: if overwrite is False and there is a file at the same path
+        Args:
+            output: a str that represents the name of the file
+            fp: a str that represents the file path as to where to save the pdf. Default is '', which will save to the current working directory
+            overwrite: a boolean, indicates whether to overwrite files or not
+
+        Returns:
+            None, just generates a pdf in the path specified with the name specified
+
+        Raises:
+            FileExistsError: if overwrite is False and there is a file at the same path
         """
         # Check for correct file format
         ext = os.path.splitext(output)[1]
@@ -85,26 +86,30 @@ class Scopul(Tempo):
             # Check existance
             if os.path.exists(fp + output):
                 # IF exists, raise error
-                raise FileExistsError(f"{fp + output} already exists. To overwrite, set overwrite=True")
+                raise FileExistsError(
+                    f"{fp + output} already exists. To overwrite, set overwrite=True"
+                )
 
         # Creates the pdf and deletes the musicxml file
         self.midi.write("musicxml.pdf", fp=fp)
         os.rename(fp + ".musicxml.pdf", fp + output)
         os.remove(fp + ".musicxml.musicxml")
 
-    def generate_musicxml(self, output : str, fp : str ='', overwrite : bool =False) -> None:
+    def generate_musicxml(
+        self, output: str, fp: str = "", overwrite: bool = False
+    ) -> None:
         """Generates a musicxml of the midi
 
-            Args:
-                output: a str that represents the name of the file
-                fp: a str that represents the file path as to where to save the pdf. Default is '', which will save to the current working directory
-                overwrite: a boolean, indicates whether to overwrite files or not
-            
-            Returns:
-                None, just generates a pdf in the path specified with the name specified
-            
-            Raises:
-                FileExistsError: if overwrite is False and there is a file at the same path
+        Args:
+            output: a str that represents the name of the file
+            fp: a str that represents the file path as to where to save the pdf. Default is '', which will save to the current working directory
+            overwrite: a boolean, indicates whether to overwrite files or not
+
+        Returns:
+            None, just generates a pdf in the path specified with the name specified
+
+        Raises:
+            FileExistsError: if overwrite is False and there is a file at the same path
         """
         # Check for correct file format
         ext = os.path.splitext(output)[1]
@@ -121,13 +126,14 @@ class Scopul(Tempo):
             # Check existance
             if os.path.exists(fp + output):
                 # IF exists, raise error
-                raise FileExistsError(f"{fp + output} already exists. To overwrite, set overwrite=True")
+                raise FileExistsError(
+                    f"{fp + output} already exists. To overwrite, set overwrite=True"
+                )
 
         # Creates the pdf and deletes the musicxml file
         self.midi.write("musicxml.xml", fp=fp)
         os.rename(fp + ".musicxml.musicxml", fp + output)
 
-        
     # (Re)constructor
     def construct(self, audio) -> None:
         """Constructor function to reconstruct the object
@@ -145,7 +151,7 @@ class Scopul(Tempo):
         self._parts = []
         for part in self.midi.parts:
             self._parts.append(Part(part))
-    
+
     @classmethod
     def midi_tempo2bpm(self, tempo: int | list) -> float | list:
         """Converts a midi tempo value to bpm

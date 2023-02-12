@@ -40,8 +40,6 @@ class Tempo:
         return self._midi_tempo_list
 
 
-
-
 def get_tempos(midi):
     lst = []
     for i in midi.flat:
