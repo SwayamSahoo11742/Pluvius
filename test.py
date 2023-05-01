@@ -1,15 +1,40 @@
-from Scopul import Scopul, config_musescore
-from music21 import environment, converter
+from Scopul import Scopul, config_musescore, Note
+from copy import deepcopy
+from music21 import (
+    environment,
+    converter,
+    musicxml,
+    stream,
+    note,
+    chord,
+    metadata,
+    percussion,
+    meter,
+    instrument,
+    key,
+    clef,
+    bar,
+    tempo,
+)
 import os
 
+env = environment.Environment()
+environment.set("debug", False)
 
-def last_id():
-    try:
-        id = os.listdir("reports")[-1]
-    except:
-        id = 0
+config_musescore(
+    "C:/Users/user/Desktop/Projects/Scopul-Package/MuseScore4/bin/MuseScore4.exe"
+)
+env[
+    "musicxmlPath"
+] = "C:/Users/user/Desktop/Projects/Scopul-Package/MuseScore4/bin/MuseScore4.exe"
+env[
+    "musescoreDirectPNGPath"
+] = "C:/Users/user/Desktop/Projects/Scopul-Package/MuseScore4/bin/MuseScore4.exe"
 
-    return int(id) + 1
+input_file = "testfiles/test3.mid"
+output_file = "help.pdf"
 
+scop = Scopul(input_file)
 
-print(last_id())
+scop.add_note(Note(name="C5", length=6), scop.parts[0], 2)
+scop.save_midi("wierd.mid", overwrite=True)
